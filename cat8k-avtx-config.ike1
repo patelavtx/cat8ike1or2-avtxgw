@@ -1,0 +1,115 @@
+Section: IOS configuration
+username ${Admin_Username} privilege 15 password ${Admin_Password}
+hostname ${hostname}
+interface GigabitEthernet2
+ip address dhcp
+ip nat inside
+no shut
+exit
+!
+crypto keyring 100
+  pre-shared-key address ${TX_GW1_Public_IP} key ${PSK}
+  exit
+!
+crypto isakmp policy 100
+  encryption 256-aes
+  authentication pre-share
+  hash sha256
+  group 14
+  lifetime 28800
+  exit
+!
+crypto isakmp keepalive 10 3 periodic
+!
+crypto isakmp profile 100
+  keyring 100
+  self-identity address
+  match identity address ${TX_GW1_Public_IP} 255.255.255.255
+  exit
+!
+!
+crypto ipsec transform-set 100 esp-256-aes esp-sha256-hmac
+  mode tunnel
+  exit
+crypto ipsec df-bit clear
+!
+crypto ipsec profile 100
+  set security-association lifetime seconds 3600
+  set transform-set 100
+  set pfs group14
+  set isakmp-profile 100
+  set security-association lifetime kilobytes disable
+  set security-association lifetime seconds 3600
+  exit
+!
+interface Tunnel 100
+  ip address ${CSR_APIPA_TUN0} 255.255.255.252
+  ip mtu 1436
+  ip tcp adjust-mss 1387
+  tunnel source GigabitEthernet1
+  tunnel mode ipsec ipv4
+  tunnel destination ${TX_GW1_Public_IP}
+  tunnel protection ipsec profile 100
+  ip virtual-reassembly
+  exit
+!
+!
+!
+crypto keyring 101
+  pre-shared-key address ${TX_GW2_Public_IP} key ${PSK}
+  exit
+!
+crypto isakmp profile 101
+  keyring 101
+  self-identity address
+  match identity address ${TX_GW2_Public_IP} 255.255.255.255
+  exit
+!
+crypto ipsec transform-set 101 esp-256-aes esp-sha256-hmac
+  mode tunnel
+  exit
+!
+crypto ipsec profile 101
+  set security-association lifetime seconds 3600
+  set transform-set 101
+  set pfs group14
+  set isakmp-profile 101
+  set security-association lifetime kilobytes disable
+  set security-association lifetime seconds 3600
+  exit
+!
+!
+interface Tunnel 101
+  ip address ${CSR_APIPA_TUN1} 255.255.255.252
+  ip mtu 1436
+  ip tcp adjust-mss 1387
+  tunnel source GigabitEthernet1
+  tunnel mode ipsec ipv4
+  tunnel destination ${TX_GW2_Public_IP}
+  tunnel protection ipsec profile 101
+  ip virtual-reassembly
+  exit
+!
+!
+router bgp ${CSR_ASN}
+ bgp log-neighbor-changes
+ redistribute connected
+ neighbor ${TX_APIPA_TUN0} remote-as ${TX_ASN} 
+ neighbor ${TX_APIPA_TUN0} timers 60 180
+ neighbor ${TX_APIPA_TUN1} remote-as ${TX_ASN}
+ neighbor ${TX_APIPA_TUN1} timers 60 180
+ !
+ address-family ipv4
+ neighbor ${TX_APIPA_TUN0} activate
+ neighbor ${TX_APIPA_TUN0} soft-reconfiguration inbound
+ neighbor ${TX_APIPA_TUN1} activate
+ neighbor ${TX_APIPA_TUN1} soft-reconfiguration inbound
+ maximum-paths 4
+ exit-address-family
+!
+ip route ${TX_APIPA_TUN0} 255.255.255.255 Tunnel100
+ip route ${TX_APIPA_TUN1} 255.255.255.255 Tunnel101
+!
+end
+!
+wr mem

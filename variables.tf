@@ -138,10 +138,19 @@ variable "apipa2" {
 }
 
 
+variable "ike_version" {
+  description = "ike1 or ike2"
+  default = "ikev2"
+}
+
+
+
 locals {
   avtxapipa1 = cidrhost(var.apipa1,1)
   avtxapipa2 = cidrhost(var.apipa2,1)
   csrapipa1 = cidrhost(var.apipa1,2)
   csrapipa2 = cidrhost(var.apipa2,2)
   phase1_remote_identifier = azurerm_public_ip.csr_pip.ip_address   # ikev2 works with pip
+  phase1_private_remote_identifier = azurerm_network_interface.csr_eth0.private_ip_address  #ike1 seems to req private ip
+  ike_ver   = var.ike_version
 }

@@ -273,7 +273,9 @@ resource "azurerm_linux_virtual_machine" "csr" {
     product   = "cisco-c8000v"
     publisher = "cisco"
   }
-  custom_data = base64encode(templatefile("${path.module}/cat8k-avtx.config.ike2", { 
+  custom_data = base64encode(templatefile(local.ike_ver == "ike1" ? "${path.module}/cat8k-avtx-config.ike1" : "${path.module}/cat8k-avtx-config.ike2",
+  # custom_data = base64encode(templatefile("${path.module}/cat8k-avtx.config.ike2", { 
+    {
     hostname = var.csr_name
     TX_APIPA_TUN0 = split("/", local.avtxapipa1)[0]
     TX_APIPA_TUN1 = split("/", local.avtxapipa2)[0]
@@ -292,7 +294,6 @@ resource "azurerm_linux_virtual_machine" "csr" {
     })
   )
 }
-
 
 /* # test vm if needed
 module "azure-linux-vm-public" {

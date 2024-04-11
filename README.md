@@ -24,6 +24,7 @@ module "cat8k-ikev2" {
   localasn = "65204"
   cidr = "10.204.28.0/23"
   region = "West Europe"
+  ike_version = "ike1"        # default is ike2
 }
 
 ```
