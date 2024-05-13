@@ -12,7 +12,7 @@ module "mc-transit" {
   # resource_group = var.rg   # rm for use in GH sourced module
   local_as_number = var.localasn
   insane_mode = "true"
-  name = "aztransit115-weu"
+  name = var.tx_gwname
   enable_advertise_transit_cidr = "true"
   enable_bgp_over_lan = "true"
   bgp_lan_interfaces_count = "1"

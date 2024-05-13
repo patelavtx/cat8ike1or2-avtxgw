@@ -96,12 +96,18 @@ variable "region" {
   default = "West Europe"
 }
 
+variable "tx_gwname" {
+  description = "Set Tx GW name"
+  type        = string
+  default = "aztransit115-weu"
+}
+
 
 # specify existing RG# existing rg - removing for module call and repo
 variable "rg" {
   description = "Set RG"
   type        = string
-  default = "atulrg-tx112"
+  default = "atulrg-tx115"
 }
 
 

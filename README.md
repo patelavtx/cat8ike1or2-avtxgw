@@ -21,9 +21,10 @@ module "cat8k-ikev2" {
   source = "github.com/patelavtx/cat8kikev2-avtxgw"
   account = "AZ-proj"
   cloud = "Azure"
-  localasn = "65204"
-  cidr = "10.204.28.0/23"
+  localasn = "65115"
+  cidr = "10.115.28.0/23"
   region = "West Europe"
+  tx_gwname = "aztransit115-weu
   ike_version = "ike1"        # default is ike2
 }
 
