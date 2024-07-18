@@ -8,7 +8,9 @@
 ## Architecture
 TBD
 ```
-mc-transit <BGPoIPSEC>  CSR 
+mc-transit (aztransit115-weu; asn=localasn=<toset>; cidr=<toset>, ) 
+<BGPoIPSEC>
+CSR (asn=65015 ; 10.15.32.0/24; weu)
 ```
 
 
@@ -21,10 +23,10 @@ module "cat8k-ikev2" {
   source = "github.com/patelavtx/cat8kikev2-avtxgw"
   account = "AZ-proj"
   cloud = "Azure"
-  localasn = "65115"
-  cidr = "10.115.28.0/23"
-  region = "West Europe"
-  tx_gwname = "aztransit115-weu
+  localasn = "65115"              # set transit gw asn
+  cidr = "10.115.28.0/23"         # set transit gw cidr
+  region = "West Europe"          # default value
+  tx_gwname = "aztransit115-weu   # default value
   ike_version = "ike1"        # default is ike2
 }
 
