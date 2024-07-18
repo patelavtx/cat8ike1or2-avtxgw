@@ -12,7 +12,7 @@ resource "aviatrix_transit_external_device_conn" "avx_tx-csr_connike2" {
 # taken from csr.tf deployment
   remote_gateway_ip         = azurerm_public_ip.csr_pip.ip_address 
   pre_shared_key            = var.ipsec_psk
-  phase1_local_identifier = "public_ip"
+  #phase1_local_identifier = "public_ip"               # provider =< 3.0.0 attribute not expected
   phase1_remote_identifier = var.ike_version == "ike1" ? [local.phase1_private_remote_identifier] : [local.phase1_remote_identifier]    # used private or public ip - list of string
   enable_ikev2              = var.ike_version == "ike1" ? "false" : "true"
   local_tunnel_cidr         = "${local.avtxapipa1}/30, ${local.avtxapipa2}/30"
