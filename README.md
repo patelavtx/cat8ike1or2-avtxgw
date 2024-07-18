@@ -27,7 +27,7 @@ module "cat8k-ikev2" {
   cidr = "10.115.28.0/23"         # set transit gw cidr
   region = "West Europe"          # default value
   tx_gwname = "aztransit115-weu   # default value
-  ike_version = "ike1"        # default is ike2
+  ike_version = "ike1"            # default is ike2
 }
 
 ```
