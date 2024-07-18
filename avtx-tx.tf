@@ -4,7 +4,7 @@
 # Step1 - deploy transit
 module "mc-transit" {
   source  = "terraform-aviatrix-modules/mc-transit/aviatrix"
-  version = "2.5.1"
+  version = "2.4.2"
   cloud = "Azure"        
   cidr = var.cidr
   region = var.region
