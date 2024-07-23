@@ -65,11 +65,8 @@ Suggested variables to set.  Most mc-transit variables for transit gateway can b
 
 ## Validated environment
 ```
-Terraform v1.3.7
-on linux_amd64
-+ provider registry.terraform.io/hashicorp/azurerm v3.0.0
-+ provider registry.terraform.io/hashicorp/http v3.2.1
-+ provider registry.terraform.io/hashicorp/random v3.4.3
+Module version	Terraform version	Controller version	Terraform provider version
+v2.5.4	        >= 1.3.0	        >= 7.1	            ~>3.1.0
 ```
 
 ## providers.tf
