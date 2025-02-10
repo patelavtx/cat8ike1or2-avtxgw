@@ -1,4 +1,4 @@
-# CAT8K AVTX-ikev2
+# CAT8ike1or2-avtxgw
 
 
 - Deploys Avtx Transit + CAT8K (now that CSR is no longer available) and makes S2C connection with BGPoIPSEC
