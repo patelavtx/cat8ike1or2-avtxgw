@@ -144,7 +144,7 @@ resource "azurerm_network_interface" "csr_eth0" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.csr_pip.id  
   }
-  enable_ip_forwarding = true
+  ip_forwarding_enabled = true
   
 }
 
@@ -160,14 +160,14 @@ resource "azurerm_network_interface" "csr_eth1" {
 
   }
 
-  enable_ip_forwarding = true
+  ip_forwarding_enabled = true
 }
 
 resource "azurerm_route_table" "public" {
   name = "${var.csr_name}-public-rtb"
   location            = azurerm_resource_group.csr_rg.location
   resource_group_name = azurerm_resource_group.csr_rg.name
-  disable_bgp_route_propagation = true
+  bgp_route_propagation_enabled = false
   
   route {
     name = "10-8"
@@ -195,7 +195,7 @@ resource "azurerm_route_table" "private" {
   name = "${var.csr_name}-private-rtb"
   location            = azurerm_resource_group.csr_rg.location
   resource_group_name = azurerm_resource_group.csr_rg.name
-  disable_bgp_route_propagation = true
+  bgp_route_propagation_enabled = false
   
   route {
     name = "10-8"
