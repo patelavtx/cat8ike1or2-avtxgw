@@ -1,5 +1,7 @@
 # CAT8K AVTX-ikev2
 
+Does this exist?
+
 - Deploys Avtx Transit + CAT8K (now that CSR is no longer available) and makes S2C connection with BGPoIPSEC
 
 - CAT8K BYOL doesn't offer BGPoIPSEC, use PAYG  *** remember to detroy when finished ***
