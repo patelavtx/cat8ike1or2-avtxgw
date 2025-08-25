@@ -159,4 +159,33 @@ locals {
   phase1_remote_identifier = azurerm_public_ip.csr_pip.ip_address   # ikev2 works with pip
   phase1_private_remote_identifier = azurerm_network_interface.csr_eth0.private_ip_address  #ike1 seems to req private ip
   ike_ver   = var.ike_version
+  fw1       = "${var.tx_gwname}-azfw1"
+  fw2       = "${var.tx_gwname}-azfw2"
+}
+
+
+
+# firenet
+variable "file_share_folder_1" {
+  type        = string
+  description = ""
+  default = "bootstrap"
+}
+
+variable "bootstrap_storage_name_1" {
+  type        = string
+  description = ""
+  default = "bootstrap"
+}
+
+# data integration
+variable "fwuser" {
+  type        = string
+  description = ""
+  default     = "fwadmin2"
+}
+variable "fwpasswd" {
+  type        = string
+  description = ""
+  default     = "Aviatrix#1234"
 }
